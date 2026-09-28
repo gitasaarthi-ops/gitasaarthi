@@ -29,13 +29,17 @@ export default function MobileAppShell() {
           <motion.div 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#B45309] to-[#F59E0B] flex items-center justify-center text-white shadow-xs"
+            className="w-8 h-8 rounded-xl overflow-hidden bg-amber-500/10 border border-amber-500/20 p-0.5 flex items-center justify-center shadow-xs"
           >
-            <Sparkles className="w-4 h-4" />
+            <img
+              src="/icon-192.png"
+              alt="GitaSaarthi Logo"
+              className="w-full h-full object-contain"
+            />
           </motion.div>
           <div>
             <span className="font-extrabold text-sm tracking-tight text-[#1E1B18] block leading-none">
-              గీత సారథి • Gita Companion
+              గీత సారథి • GitaSaarthi
             </span>
             <span className="text-[9px] font-bold tracking-wider uppercase text-[#853F00] mt-0.5 block">
               Kurukshetra Decision Engine
@@ -89,7 +93,7 @@ export default function MobileAppShell() {
               </div>
 
               <p className="text-xs text-[#50453D] leading-relaxed">
-                Gita Companion is a daily philosophical &amp; reflection guide. If you or someone you know is in acute distress or self-harm crisis, please reach out to trusted national support:
+                GitaSaarthi is a daily philosophical &amp; reflection guide. If you or someone you know is in acute distress or self-harm crisis, please reach out to trusted national support:
               </p>
 
               <div className="space-y-2 text-xs">

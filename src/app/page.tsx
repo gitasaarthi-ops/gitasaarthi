@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
@@ -9,17 +9,26 @@ import MindResetPacer from '../components/MindResetPacer';
 import BookCompanionShowcase from '../components/BookCompanionShowcase';
 import ReaderReviews from '../components/ReaderReviews';
 import Footer from '../components/Footer';
+import WelcomeSplash from '../components/WelcomeSplash';
 import { GITA_CHAPTERS } from '../data/chapters';
 import { BookOpen, Sparkles, ArrowRight, Heart, Brain, Briefcase, Smile } from 'lucide-react';
 
 export default function HomePage() {
+  const [showSplash, setShowSplash] = useState(true);
+
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F5]">
+      {showSplash && (
+        <WelcomeSplash
+          durationSeconds={10}
+          onComplete={() => setShowSplash(false)}
+        />
+      )}
       <Navbar />
 
       <main className="flex-1">
         {/* 1. Hero Showcase */}
-        <Hero />
+        <Hero onReplayWelcome={() => setShowSplash(true)} />
 
         {/* 2. Modern Life Operating System (Our Primary Mission) */}
         <ModernLifeNavigator />

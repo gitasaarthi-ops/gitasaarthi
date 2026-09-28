@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { Play, Sparkles, BookOpen, CheckCircle, ArrowRight, Video } from 'lucide-react';
 import VideoPlayerModal from './VideoPlayerModal';
 
-export default function Hero() {
+interface HeroProps {
+  onReplayWelcome?: () => void;
+}
+
+export default function Hero({ onReplayWelcome }: HeroProps) {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   return (
@@ -22,7 +26,7 @@ export default function Hero() {
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#1E1B18] tracking-tight leading-[1.15]">
             Transform Your Life with{' '}
             <span className="bg-gradient-to-r from-[#D97706] to-[#B45309] bg-clip-text text-transparent">
-              Bhagavad Gita For All
+              GitaSaarthi
             </span>
           </h1>
 
@@ -53,6 +57,17 @@ export default function Hero() {
               </div>
               <span>See How It Works (Video)</span>
             </button>
+
+            {onReplayWelcome && (
+              <button
+                onClick={onReplayWelcome}
+                className="w-full sm:w-auto px-5 py-4 rounded-2xl bg-[#FEF3C7] border border-[#FDE68A] hover:bg-[#FDE68A] text-[#853F00] font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-2"
+                title="Watch the 7-second flashing Welcome Screen again"
+              >
+                <Sparkles className="w-4 h-4 text-[#D97706]" />
+                <span>Replay Welcome Screen</span>
+              </button>
+            )}
           </div>
 
           {/* Key Value Points */}
@@ -80,7 +95,7 @@ export default function Hero() {
               {/* Background Video Thumbnail */}
               <img
                 src="https://img.youtube.com/vi/zSo4UKr3TJE/maxresdefault.jpg"
-                alt="Bhagavad Gita For All Trailer"
+                alt="GitaSaarthi Trailer"
                 className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -114,7 +129,7 @@ export default function Hero() {
         isOpen={videoModalOpen}
         onClose={() => setVideoModalOpen(false)}
         youtubeId="zSo4UKr3TJE"
-        title="Transform Your Life with Bhagavad Gita For All"
+        title="Transform Your Life with GitaSaarthi"
       />
     </section>
   );

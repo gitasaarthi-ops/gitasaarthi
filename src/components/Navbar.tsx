@@ -12,12 +12,16 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#B45309] to-[#F59E0B] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-            <Sparkles className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-2xl overflow-hidden bg-amber-500/10 border border-amber-500/20 p-1 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+            <img
+              src="/icon-192.png"
+              alt="GitaSaarthi Logo"
+              className="w-full h-full object-contain"
+            />
           </div>
           <div>
             <span className="font-extrabold text-base tracking-tight text-[#1E1B18] block leading-none">
-              Bhagavad Gita <span className="text-[#D97706]">For All</span>
+              Gita<span className="text-[#D97706]">Saarthi</span>
             </span>
             <span className="text-[10px] font-semibold tracking-widest uppercase text-[#853F00] mt-0.5 block">
               World&apos;s First Video Gita

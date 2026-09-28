@@ -93,7 +93,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
-          <p>© {new Date().getFullYear()} Bhagavad Gita For All. Dedicated to the eternal guidance of Sri Krishna.</p>
+          <p>© {new Date().getFullYear()} GitaSaarthi. Dedicated to the eternal guidance of Sri Krishna.</p>
           <p className="flex items-center gap-1">
             Built with reverence <Heart className="w-3.5 h-3.5 text-rose-500 fill-current" /> for wisdom seekers
           </p>

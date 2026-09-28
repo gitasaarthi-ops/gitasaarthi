@@ -78,7 +78,7 @@ export default function BookCompanionShowcase() {
             </h2>
 
             <p className="text-sm sm:text-base text-[#50453D] leading-relaxed">
-              Traditional books can feel distant or difficult to decipher. Bhagavad Gita For All merges the 
+              Traditional books can feel distant or difficult to decipher. GitaSaarthi merges the 
               tactile holiness of a luxury illustrated hardcover with the interactive power of a modern mobile app.
             </p>
 
