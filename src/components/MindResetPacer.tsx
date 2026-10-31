@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Wind, Play, Pause, RefreshCw, Sparkles, Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Play, Pause, RefreshCw } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function MindResetPacer() {
+  const { t, language } = useLanguage();
   const [isActive, setIsActive] = useState(false);
   const [phase, setPhase] = useState<'Inhale' | 'Hold' | 'Exhale'>('Inhale');
-  const [phaseTe, setPhaseTe] = useState<string>('శ్వాస తీసుకోండి');
   const [secondsLeft, setSecondsLeft] = useState(60);
   const [cycleSeconds, setCycleSeconds] = useState(0);
 
@@ -28,13 +29,10 @@ export default function MindResetPacer() {
           const next = (prev + 1) % 12; // 4s inhale, 4s hold, 4s exhale
           if (next < 4) {
             setPhase('Inhale');
-            setPhaseTe('శ్వాసను నెమ్మదిగా తీసుకోండి');
           } else if (next < 8) {
             setPhase('Hold');
-            setPhaseTe('శ్వాసను నిశ్చలంగా నిలపండి');
           } else {
             setPhase('Exhale');
-            setPhaseTe('ఒత్తిడిని విడుదల చేయండి');
           }
           return next;
         });
@@ -49,7 +47,6 @@ export default function MindResetPacer() {
       setSecondsLeft(60);
       setCycleSeconds(0);
       setPhase('Inhale');
-      setPhaseTe('శ్వాసను నెమ్మదిగా తీసుకోండి');
     }
     setIsActive(!isActive);
   };
@@ -59,8 +56,13 @@ export default function MindResetPacer() {
     setSecondsLeft(60);
     setCycleSeconds(0);
     setPhase('Inhale');
-    setPhaseTe('శ్వాసను నెమ్మదిగా తీసుకోండి');
   };
+
+  const phaseInstruction = phase === 'Inhale' 
+    ? t.pacerInhale 
+    : phase === 'Hold' 
+    ? t.pacerHold 
+    : t.pacerExhale;
 
   return (
     <div className="bg-[#FAF8F5] rounded-3xl p-6 border border-[#E7E3DD] max-w-xl mx-auto text-center space-y-6 relative overflow-hidden">
@@ -78,13 +80,13 @@ export default function MindResetPacer() {
 
       <div className="relative z-10">
         <span className="text-[10px] font-bold uppercase tracking-widest text-[#853F00] block mb-1">
-          Gita 6.26 • Instant Grounding • ప్రాణాయామం
+          Gita 6.26 • Instant Grounding • {language === 'te' ? 'ప్రాణాయామం' : 'Prāṇāyāma'}
         </span>
         <h3 className="text-xl sm:text-2xl font-extrabold text-[#1E1B18]">
-          60-Second Kurukshetra Breath Pacer
+          {t.pacerTitle}
         </h3>
         <p className="text-xs text-[#50453D] mt-1 max-w-sm mx-auto">
-          Whenever the mind wanders or races in panic, follow this expanding sacred ring to steady your nervous system.
+          {t.pacerSubtitle}
         </p>
       </div>
 
@@ -130,8 +132,8 @@ export default function MindResetPacer() {
           <span className="text-2xl font-mono font-extrabold text-[#1E1B18] block leading-tight">
             {isActive ? `${secondsLeft}s` : '60s'}
           </span>
-          <span className="text-[10px] text-[#82756B] block leading-tight font-medium mt-0.5">
-            {isActive ? phaseTe : 'Tap Start'}
+          <span className="text-[10px] text-[#82756B] block leading-tight font-medium mt-0.5 px-1 truncate max-w-full">
+            {isActive ? phaseInstruction : 'Tap Start'}
           </span>
         </motion.div>
       </div>
@@ -144,7 +146,7 @@ export default function MindResetPacer() {
           className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D97706] to-[#B45309] hover:from-[#B45309] hover:to-[#92400E] text-white text-xs font-bold shadow-md transition-all flex items-center gap-2 cursor-pointer"
         >
           {isActive ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
-          <span>{isActive ? 'Pause' : 'Start 60s Reset'}</span>
+          <span>{isActive ? 'Pause' : t.pacerStart}</span>
         </motion.button>
 
         {isActive && (
@@ -163,7 +165,11 @@ export default function MindResetPacer() {
 
       {/* Anchor Shloka Quotation */}
       <div className="pt-2 text-[11px] text-[#78350F] italic font-serif max-w-md mx-auto relative z-10 border-t border-[#E7E3DD]/60">
-        &ldquo;యతో యతో నిశ్చరతి మనశ్చఞ్చలమస్థిరమ్... Whenever the restless mind wanders, gently guide it back to rest in the Self.&rdquo; — Gita 6.26
+        {language === 'te' ? (
+          <>&ldquo;యతో యతో నిశ్చరతి మనశ్చఞ్చలమస్థిరమ్... చంచలమైన మనస్సు ఎక్కడెక్కడికి పరుగెత్తునో అక్కడినుండి దానిని మరలించి ఆత్మయందే నిలుపవలెను.&rdquo; — గీత 6.26</>
+        ) : (
+          <>&ldquo;yato yato niścarati manaś cañcalam asthiram... Whenever the restless mind wanders, gently guide it back to rest in the Self.&rdquo; — Gita 6.26</>
+        )}
       </div>
     </div>
   );

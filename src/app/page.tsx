@@ -11,10 +11,12 @@ import ReaderReviews from '../components/ReaderReviews';
 import Footer from '../components/Footer';
 import WelcomeSplash from '../components/WelcomeSplash';
 import { GITA_CHAPTERS } from '../data/chapters';
-import { BookOpen, Sparkles, ArrowRight, Heart, Brain, Briefcase, Smile } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function HomePage() {
   const [showSplash, setShowSplash] = useState(true);
+  const { language, t } = useLanguage();
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F5]">
@@ -30,7 +32,7 @@ export default function HomePage() {
         {/* 1. Hero Showcase */}
         <Hero onReplayWelcome={() => setShowSplash(true)} />
 
-        {/* 2. Modern Life Operating System (Our Primary Mission) */}
+        {/* 2. Modern Life Operating System */}
         <ModernLifeNavigator />
 
         {/* 3. Interactive 60-Second Mind Reset & Nervous System Calmer */}
@@ -38,10 +40,10 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <div className="text-center max-w-xl mx-auto">
               <span className="text-xs font-bold uppercase tracking-wider text-[#D97706]">
-                Instant Mental First-Aid
+                {t.pacerBadge}
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1E1B18] mt-1">
-                Feeling Overwhelmed Right Now?
+                {t.pacerTitle}
               </h2>
             </div>
 
@@ -54,13 +56,13 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
             <div className="text-center max-w-2xl mx-auto space-y-2">
               <span className="text-xs font-bold uppercase tracking-wider text-[#853F00]">
-                Daily Routine Architecture
+                {t.pillarsBadge}
               </span>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-[#1E1B18]">
-                How Gita Helps You Manage Every 24 Hours
+                {t.pillarsTitle}
               </h2>
               <p className="text-sm text-[#50453D]">
-                Spiritual wisdom is not a weekend event. It is a system for how you wake up, work, and sleep.
+                {t.pillarsSubtitle}
               </p>
             </div>
 
@@ -69,9 +71,9 @@ export default function HomePage() {
                 <div className="w-10 h-10 rounded-2xl bg-[#FEF3C7] text-[#853F00] flex items-center justify-center font-bold text-sm">
                   07:00
                 </div>
-                <h3 className="text-base font-bold text-[#1E1B18]">Morning Intention</h3>
+                <h3 className="text-base font-bold text-[#1E1B18]">{t.morningTitle}</h3>
                 <p className="text-xs text-[#50453D] leading-relaxed">
-                  Start the day with Chapter 6 clarity before opening social media. Anchor in inner silence.
+                  {t.morningDesc}
                 </p>
               </div>
 
@@ -79,9 +81,9 @@ export default function HomePage() {
                 <div className="w-10 h-10 rounded-2xl bg-[#DCFCE7] text-[#0F5132] flex items-center justify-center font-bold text-sm">
                   11:00
                 </div>
-                <h3 className="text-base font-bold text-[#1E1B18]">Karma Yoga at Work</h3>
+                <h3 className="text-base font-bold text-[#1E1B18]">{t.workTitle}</h3>
                 <p className="text-xs text-[#50453D] leading-relaxed">
-                  Gita 2.47 flow state: Give 100% effort to your code, presentation, or surgery without panic over praise or blame.
+                  {t.workDesc}
                 </p>
               </div>
 
@@ -89,9 +91,9 @@ export default function HomePage() {
                 <div className="w-10 h-10 rounded-2xl bg-[#FEF3C7] text-[#853F00] flex items-center justify-center font-bold text-sm">
                   19:00
                 </div>
-                <h3 className="text-base font-bold text-[#1E1B18]">Evening Boundary</h3>
+                <h3 className="text-base font-bold text-[#1E1B18]">{t.eveningTitle}</h3>
                 <p className="text-xs text-[#50453D] leading-relaxed">
-                  Gita 12.15 composure: Do not bring office fury or corporate politics to the dinner table with your family.
+                  {t.eveningDesc}
                 </p>
               </div>
 
@@ -99,9 +101,9 @@ export default function HomePage() {
                 <div className="w-10 h-10 rounded-2xl bg-[#DCFCE7] text-[#0F5132] flex items-center justify-center font-bold text-sm">
                   23:00
                 </div>
-                <h3 className="text-base font-bold text-[#1E1B18]">Night Ocean Surrender</h3>
+                <h3 className="text-base font-bold text-[#1E1B18]">{t.nightTitle}</h3>
                 <p className="text-xs text-[#50453D] leading-relaxed">
-                  Gita 2.70 unshakeable ocean: All thoughts and unfinished tasks merge into quiet sleep. You are held in divine care.
+                  {t.nightDesc}
                 </p>
               </div>
             </div>
@@ -117,10 +119,10 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 max-w-4xl">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-[#853F00] block mb-1">
-                  Complete Wisdom Vault
+                  18 Chapters
                 </span>
                 <h2 className="text-2xl sm:text-4xl font-extrabold text-[#1E1B18] tracking-tight">
-                  The Complete 18 Chapters Directory
+                  {language === 'te' ? '18 అధ్యాయాల దివ్య నిధి' : language === 'hi' ? '18 अध्यायों का दिव्य भंडार' : 'The Complete 18 Chapters Directory'}
                 </h2>
                 <p className="text-sm text-[#50453D] mt-1">
                   700 sacred verses organized into 18 transformative disciplines for the modern mind.
@@ -131,7 +133,7 @@ export default function HomePage() {
                 href="/explorer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FAF8F5] border border-[#E7E3DD] text-[#853F00] hover:bg-[#FEF3C7] text-xs font-bold transition-colors shrink-0"
               >
-                <span>Browse All Shlokas</span>
+                <span>{t.navExplore}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -155,17 +157,19 @@ export default function HomePage() {
                     </div>
 
                     <h3 className="text-base font-bold text-[#1E1B18] group-hover:text-[#D97706] transition-colors">
-                      {ch.nameEnglish}
+                      {language === 'te' ? ch.nameTelugu : ch.nameEnglish}
                     </h3>
-                    <div className="text-xs text-[#78350F] font-medium">{ch.nameTelugu}</div>
+                    <div className="text-xs text-[#78350F] font-medium">
+                      {language === 'te' ? ch.nameEnglish : ch.nameTelugu}
+                    </div>
 
                     <p className="text-xs text-[#50453D] line-clamp-2 leading-relaxed">
-                      {ch.summaryEn}
+                      {language === 'te' ? ch.summaryTe : ch.summaryEn}
                     </p>
                   </div>
 
                   <div className="pt-4 mt-3 border-t border-[#E7E3DD] flex items-center justify-between text-xs text-[#853F00] font-bold">
-                    <span>Explore Verses</span>
+                    <span>{t.navExplore}</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>

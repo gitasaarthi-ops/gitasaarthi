@@ -8,11 +8,13 @@ import Footer from '../../components/Footer';
 import ShlokaCard from '../../components/ShlokaCard';
 import { GITA_CHAPTERS } from '../../data/chapters';
 import { FEATURED_SHLOKAS } from '../../data/shlokas';
-import { BookOpen, Search, ArrowLeft, Filter, Sparkles } from 'lucide-react';
+import { BookOpen, Search, ArrowLeft, Sparkles } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 function ExplorerContent() {
   const searchParams = useSearchParams();
   const initialChapter = Number(searchParams?.get('chapter')) || 2;
+  const { language, t } = useLanguage();
 
   const [selectedChapter, setSelectedChapter] = useState<number>(initialChapter);
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,6 +29,7 @@ function ExplorerContent() {
         s.transliteration.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.translationEn.toLowerCase().includes(searchQuery.toLowerCase()) ||
         s.translationTe.includes(searchQuery) ||
+        s.translationHi.includes(searchQuery) ||
         s.shlokaSanskrit.includes(searchQuery);
 
       return matchChapter && matchQuery;
@@ -45,26 +48,26 @@ function ExplorerContent() {
             className="inline-flex items-center gap-1.5 text-xs font-bold text-[#853F00] hover:underline"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Home</span>
+            <span>&larr; {t.navHome}</span>
           </Link>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl sm:text-4xl font-extrabold text-[#1E1B18] tracking-tight">
-                Shloka Explorer &amp; Video Commentaries
+                {t.explorerTitle}
               </h1>
               <p className="text-xs sm:text-sm text-[#50453D] mt-1">
-                Explore Sanskrit shlokas, Telugu verses, word-by-word anvaya, and practical life applications.
+                {t.explorerSubtitle}
               </p>
             </div>
 
             {/* Search Input */}
-            <div className="relative w-full sm:w-72">
+            <div className="relative w-full sm:w-80">
               <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#82756B]" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search verse or keyword..."
+                placeholder={t.searchPlaceholder}
                 className="w-full text-xs pl-10 pr-4 py-2.5 rounded-xl border border-[#E7E3DD] bg-white text-[#1E1B18] focus:outline-none focus:ring-2 focus:ring-[#D97706]"
               />
             </div>
@@ -74,11 +77,15 @@ function ExplorerContent() {
         {/* 18 Chapters Horizontal Scrollable Picker */}
         <div className="space-y-2">
           <span className="text-[11px] font-bold uppercase tracking-wider text-[#853F00] block">
-            Select Chapter (1 to 18)
+            {t.selectChapter}
           </span>
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
             {GITA_CHAPTERS.map((ch) => {
               const isSelected = selectedChapter === ch.number;
+              const chapterLabel = language === 'te' 
+                ? ch.nameTelugu.split(' ')[0] 
+                : ch.nameEnglish.split(' ')[0];
+
               return (
                 <button
                   key={ch.number}
@@ -90,7 +97,7 @@ function ExplorerContent() {
                   }`}
                 >
                   <span className="opacity-70 font-mono">Ch.{ch.number}</span>
-                  <span>{ch.nameEnglish.split(' ')[0]}</span>
+                  <span>{chapterLabel}</span>
                 </button>
               );
             })}
@@ -110,11 +117,14 @@ function ExplorerContent() {
           </div>
 
           <h2 className="text-xl sm:text-2xl font-extrabold text-[#1E1B18]">
-            {currentChapter.nameEnglish} ({currentChapter.nameTelugu})
+            {language === 'te' ? currentChapter.nameTelugu : currentChapter.nameEnglish}
+            <span className="text-[#853F00] text-base font-medium ml-2 font-serif">
+              ({language === 'te' ? currentChapter.nameEnglish : currentChapter.nameTelugu})
+            </span>
           </h2>
 
           <p className="text-xs sm:text-sm text-[#50453D] leading-relaxed max-w-3xl">
-            {currentChapter.summaryEn}
+            {language === 'te' ? currentChapter.summaryTe : currentChapter.summaryEn}
           </p>
 
           <div className="pt-2 text-xs text-[#853F00] font-medium flex items-center gap-1.5">
@@ -127,10 +137,10 @@ function ExplorerContent() {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="text-base font-bold text-[#1E1B18]">
-              Verses with Video &amp; 6-Layer Life Wisdom
+              {t.showingVerses}
             </h3>
             <span className="text-xs text-[#82756B] font-medium">
-              Showing {filteredShlokas.length} Verse{filteredShlokas.length === 1 ? '' : 's'}
+              {filteredShlokas.length} Verse{filteredShlokas.length === 1 ? '' : 's'}
             </span>
           </div>
 
@@ -145,7 +155,7 @@ function ExplorerContent() {
               </p>
               <button
                 onClick={() => setSelectedChapter(2)}
-                className="px-4 py-2 rounded-xl bg-[#D97706] text-white text-xs font-bold hover:bg-[#B45309]"
+                className="px-4 py-2 rounded-xl bg-[#D97706] text-white text-xs font-bold hover:bg-[#B45309] cursor-pointer"
               >
                 Go to Chapter 2 (Sāṅkhya Yoga)
               </button>

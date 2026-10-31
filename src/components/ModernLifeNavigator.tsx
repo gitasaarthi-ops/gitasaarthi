@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { MODERN_LIFE_CHALLENGES, LifeChallenge } from '../data/lifeChallenges';
 import { Brain, Briefcase, Smartphone, HeartHandshake, Compass, CheckCircle2, ArrowRight, Sparkles, Shield, Flame } from 'lucide-react';
 import Link from 'next/link';
+import { useLanguage } from '../context/LanguageContext';
 
 const CATEGORY_ICONS = {
   anxiety: Brain,
@@ -15,29 +16,27 @@ const CATEGORY_ICONS = {
 
 export default function ModernLifeNavigator() {
   const [activeChallengeId, setActiveChallengeId] = useState<string>(MODERN_LIFE_CHALLENGES[0].id);
+  const { language, t } = useLanguage();
 
   const activeChallenge = MODERN_LIFE_CHALLENGES.find((c) => c.id === activeChallengeId) || MODERN_LIFE_CHALLENGES[0];
   const Icon = CATEGORY_ICONS[activeChallenge.category] || Sparkles;
 
+  const challengeTitle = language === 'te' ? activeChallenge.titleTe : activeChallenge.title;
+
   return (
-    <section id="life-manager" className="py-16 sm:py-24 bg-white border-y border-[#E7E3DD]">
+    <section id="situations" className="py-16 sm:py-24 bg-white border-y border-[#E7E3DD]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FEF3C7] text-[#853F00] text-xs font-bold border border-[#FDE68A]">
             <Sparkles className="w-3.5 h-3.5 text-[#D97706]" />
-            <span>Spiritual Psychology for 2026</span>
+            <span>{t.navigatorBadge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1E1B18] tracking-tight leading-tight">
-            Not Archaic Rituals. <br />
-            <span className="bg-gradient-to-r from-[#D97706] to-[#B45309] bg-clip-text text-transparent">
-              A Living Manual for the Modern Mind.
-            </span>
+            {t.navigatorTitle}
           </h2>
           <p className="text-base sm:text-lg text-[#50453D] leading-relaxed">
-            Most people feel disconnected from spirituality because it is taught as dogma. 
-            The Bhagavad Gita is not a religious textbook — it is a combat manual for mental peace. 
-            Select your real-world struggle below:
+            {t.navigatorSubtitle}
           </p>
         </div>
 
@@ -46,6 +45,7 @@ export default function ModernLifeNavigator() {
           {MODERN_LIFE_CHALLENGES.map((challenge) => {
             const isSelected = activeChallengeId === challenge.id;
             const TabIcon = CATEGORY_ICONS[challenge.category] || Sparkles;
+            const tabTitle = language === 'te' ? challenge.titleTe : challenge.title;
 
             return (
               <button
@@ -58,7 +58,7 @@ export default function ModernLifeNavigator() {
                 }`}
               >
                 <TabIcon className={`w-4 h-4 ${isSelected ? 'text-amber-400' : 'text-[#78350F]'}`} />
-                <span>{challenge.title}</span>
+                <span>{tabTitle}</span>
               </button>
             );
           })}
@@ -69,10 +69,10 @@ export default function ModernLifeNavigator() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E7E3DD]">
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-[#853F00] block mb-1">
-                Modern Dilemma • {activeChallenge.titleTe}
+                {language === 'te' ? activeChallenge.title : activeChallenge.titleTe}
               </span>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-[#1E1B18]">
-                {activeChallenge.title}
+                {challengeTitle}
               </h3>
               <p className="text-sm text-[#78350F] font-medium mt-1">
                 {activeChallenge.tagline}
@@ -89,7 +89,7 @@ export default function ModernLifeNavigator() {
             {/* Column 1: The Modern Symptom */}
             <div className="bg-white p-5 rounded-2xl border border-[#E7E3DD] space-y-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-rose-700 block">
-                1. What You Experience Daily
+                {t.modernSymptom}
               </span>
               <p className="text-xs text-[#50453D] leading-relaxed">
                 {activeChallenge.modernSymptom}
@@ -99,7 +99,7 @@ export default function ModernLifeNavigator() {
             {/* Column 2: Why Modern Society Triggers This */}
             <div className="bg-white p-5 rounded-2xl border border-[#E7E3DD] space-y-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 block">
-                2. Why Modern Life Traps You
+                {t.whyThisShloka}
               </span>
               <p className="text-xs text-[#50453D] leading-relaxed">
                 {activeChallenge.whyModernLifeCausesThis}
@@ -109,7 +109,7 @@ export default function ModernLifeNavigator() {
             {/* Column 3: Krishna's Psychological Diagnosis */}
             <div className="bg-[#FEF3C7]/50 p-5 rounded-2xl border border-[#FDE68A] space-y-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-[#853F00] block">
-                3. Krishna&apos;s Core Diagnosis
+                {t.krishnaDiagnosis}
               </span>
               <p className="text-xs text-[#1E1B18] font-medium leading-relaxed">
                 {activeChallenge.krishnasDiagnosis}
@@ -122,17 +122,19 @@ export default function ModernLifeNavigator() {
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-[#853F00] uppercase tracking-wider flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-[#D97706]" />
-                The Spiritual Antidote
+                {t.corePrinciple}
               </span>
-              <span className="text-xs text-[#82756B]">Sanskrit &amp; Telugu Scripture</span>
+              <span className="text-xs text-[#82756B]">
+                {language === 'te' ? 'సంస్కృత & తెలుగు ప్రమాణము' : 'Sanskrit & Classical Scripture'}
+              </span>
             </div>
 
             <p className="text-base sm:text-lg font-bold text-[#1E1B18] leading-relaxed whitespace-pre-line text-center bg-[#FAF8F5] p-4 rounded-xl border border-[#E7E3DD]">
-              {activeChallenge.shlokaSanskrit}
+              {language === 'te' ? activeChallenge.shlokaTelugu : activeChallenge.shlokaSanskrit}
             </p>
 
             <div className="p-4 rounded-xl bg-[#FEF3C7]/60 border border-[#FDE68A] text-center">
-              <span className="text-xs text-[#853F00] font-bold block mb-1">Core Takeaway:</span>
+              <span className="text-xs text-[#853F00] font-bold block mb-1">{t.corePrinciple}:</span>
               <p className="text-sm font-bold text-[#1E1B18]">
                 &ldquo;{activeChallenge.corePrinciple}&rdquo;
               </p>
@@ -143,7 +145,7 @@ export default function ModernLifeNavigator() {
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E1B18] flex items-center gap-1.5">
               <Flame className="w-4 h-4 text-[#D97706]" />
-              Your 3-Step Life-Management Protocol for Today
+              {t.actionPlan}
             </h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -166,7 +168,7 @@ export default function ModernLifeNavigator() {
               href={`/explorer?chapter=${activeChallenge.shlokaChapterVerse.split(' ')[1]}`}
               className="inline-flex items-center gap-2 text-xs font-bold text-[#D97706] hover:text-[#B45309] transition-colors"
             >
-              <span>Explore full commentary, video &amp; Sanskrit recitation</span>
+              <span>{t.explorerTitle} &rarr;</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
