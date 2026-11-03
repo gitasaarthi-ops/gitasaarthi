@@ -286,3 +286,62 @@ BEGIN
     RETURN v_result;
 END;
 $$;
+
+-- ----------------------------------------------------------------------------
+-- ROW LEVEL SECURITY (RLS) & PUBLIC READ ACCESS POLICIES
+-- Pre-enabling RLS prevents Supabase dashboard warnings and ensures secure read access.
+-- ----------------------------------------------------------------------------
+
+ALTER TABLE content_manifest ENABLE ROW LEVEL SECURITY;
+ALTER TABLE sources ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chapters ENABLE ROW LEVEL SECURITY;
+ALTER TABLE verses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE translations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE verse_words ENABLE ROW LEVEL SECURITY;
+ALTER TABLE themes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE verse_themes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE situations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE verse_situations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE practices ENABLE ROW LEVEL SECURITY;
+ALTER TABLE situation_practices ENABLE ROW LEVEL SECURITY;
+ALTER TABLE verse_embeddings ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Public Read Manifest" ON content_manifest;
+CREATE POLICY "Public Read Manifest" ON content_manifest FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Sources" ON sources;
+CREATE POLICY "Public Read Sources" ON sources FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Chapters" ON chapters;
+CREATE POLICY "Public Read Chapters" ON chapters FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Verses" ON verses;
+CREATE POLICY "Public Read Verses" ON verses FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Translations" ON translations;
+CREATE POLICY "Public Read Translations" ON translations FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Verse Words" ON verse_words;
+CREATE POLICY "Public Read Verse Words" ON verse_words FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Themes" ON themes;
+CREATE POLICY "Public Read Themes" ON themes FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Verse Themes" ON verse_themes;
+CREATE POLICY "Public Read Verse Themes" ON verse_themes FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Situations" ON situations;
+CREATE POLICY "Public Read Situations" ON situations FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Verse Situations" ON verse_situations;
+CREATE POLICY "Public Read Verse Situations" ON verse_situations FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Practices" ON practices;
+CREATE POLICY "Public Read Practices" ON practices FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Situation Practices" ON situation_practices;
+CREATE POLICY "Public Read Situation Practices" ON situation_practices FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Public Read Verse Embeddings" ON verse_embeddings;
+CREATE POLICY "Public Read Verse Embeddings" ON verse_embeddings FOR SELECT USING (true);
+
