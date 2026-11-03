@@ -345,3 +345,15 @@ CREATE POLICY "Public Read Situation Practices" ON situation_practices FOR SELEC
 DROP POLICY IF EXISTS "Public Read Verse Embeddings" ON verse_embeddings;
 CREATE POLICY "Public Read Verse Embeddings" ON verse_embeddings FOR SELECT USING (true);
 
+-- ----------------------------------------------------------------------------
+-- ROLE PERMISSIONS (GRANT ACCESS TO anon, authenticated, service_role)
+-- ----------------------------------------------------------------------------
+GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL ROUTINES IN SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON ROUTINES TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO anon, authenticated, service_role;
+
+
